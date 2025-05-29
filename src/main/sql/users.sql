@@ -8,5 +8,3 @@ create table Users(
     email nvarchar(250) not null unique,
     password nvarchar(250) not null
 );
-
-select * from Users;
