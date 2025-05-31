@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
 public class Main {
@@ -31,7 +32,6 @@ public class Main {
 
         System.out.println("Enter your Age: ");
         Integer age = Integer.parseInt(scanner.nextLine());
-        scanner.nextLine();
 
         System.out.println("Enter your Email: ");
         String email = scanner.nextLine();
@@ -47,6 +47,13 @@ public class Main {
             session.persist(u);
 
             tx.commit();
+
+            System.out.println("You have successfully registered!");
+        } catch (ConstraintViolationException e) {
+            System.out.println();
+            System.out.println("An account with this email already exists");
+            session.close();
+            return false;
         } catch (Exception e) {
             System.out.println();
             System.out.println("Exception in the database: " + e.getMessage());
